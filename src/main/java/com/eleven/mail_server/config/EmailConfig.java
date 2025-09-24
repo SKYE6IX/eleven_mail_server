@@ -1,6 +1,5 @@
 package com.eleven.mail_server.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +25,7 @@ public class EmailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(env.getProperty("email.server.host"));
         mailSender.setPort(PORT);
+
         mailSender.setUsername(env.getProperty("email.server.username"));
         mailSender.setPassword(env.getProperty("email.server.password"));
 
