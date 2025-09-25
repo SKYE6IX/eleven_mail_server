@@ -69,6 +69,7 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_CD_KEY_JSON }}
           container-name: ${{ vars.YC_CONTAINER_NAME }}
           folder-id: ${{ vars.YC_FOLDER_ID }}
+          revision-service-account-id: ${{ secrets.YC_SA_CD_ACCOUNT_ID }}
           revision-cores: 1
           revision-memory: 512Mb
           revision-core-fraction: 100
