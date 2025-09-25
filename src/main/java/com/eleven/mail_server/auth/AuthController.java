@@ -55,6 +55,15 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthRequest authRequest){
 
+//        Check if User with the username already exist.
+        UserEntity user = userRepository.findByUserName(authRequest.getUsername())
+                .orElse(null);
+        if(user != null){
+            String responseMessage = "A user with this username " + authRequest.getUsername() +
+                    " already exist.";
+            return ResponseEntity.status(HttpStatus.FOUND).body(responseMessage);
+        }
+        //  Continue to create a new user if there is no existing User
         passwordEncoder = new BCryptPasswordEncoder(16);
 
         String harshPassword = passwordEncoder.encode(authRequest.getPassword());
