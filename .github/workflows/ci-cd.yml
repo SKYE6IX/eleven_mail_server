@@ -48,7 +48,7 @@ jobs:
       - name: Login to Yandex Cloud Container Registry
         uses: yc-actions/yc-cr-login@v3
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_CI_KEY_JSON }}
+          yc-sa-json-credentials: ${{ secrets.YC_SA_CI_CD_KEY_JSON }}
 
       - name: Pull from Docker Hub and Push to Yandex CR
         env:
@@ -66,10 +66,10 @@ jobs:
       - name: Deploy to Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v3
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_CD_KEY_JSON }}
+          yc-sa-json-credentials: ${{ secrets.YC_SA_CI_CD_KEY_JSON  }}
           container-name: ${{ vars.YC_CONTAINER_NAME }}
           folder-id: ${{ vars.YC_FOLDER_ID }}
-          revision-service-account-id: ${{ secrets.YC_SA_CD_ACCOUNT_ID }}
+          revision-service-account-id: ${{ secrets.YC_SA_ID }}
           revision-cores: 1
           revision-memory: 512Mb
           revision-core-fraction: 100
