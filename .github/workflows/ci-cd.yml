@@ -76,10 +76,10 @@ jobs:
           revision-image-url: cr.yandex/${{ vars.YC_REGISTRY_ID }}/${{ github.event.repository.name }}:latest
           revision-execution-timeout: 20
           revision-commands: java,-jar,application.jar
-          revision-env: > 
-            DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME}},
-            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD}},
-            DATABASE_URL=${{ secrets.DATABASE_URL}},
-            EMAIL_SERVER_PASSWORD=${{ secrets.EMAIL_SERVER_PASSWORD}},
-            EMAIL_SERVER_USERNAME=${{ vars.EMAIL_SERVER_PASSWORD}},
+          revision-env: |
+            DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME}}
+            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD}}
+            DATABASE_URL=${{ secrets.DATABASE_URL}}
+            EMAIL_SERVER_PASSWORD=${{ secrets.EMAIL_SERVER_PASSWORD}}
+            EMAIL_SERVER_USERNAME=${{ vars.EMAIL_SERVER_PASSWORD}}
             EMAIL_SERVER_SECRET=${{ secrets.EMAIL_SERVER_SECRET}}
