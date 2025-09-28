@@ -19,13 +19,29 @@ public class EmailServiceImp implements EmailService {
     public EmailServiceImp(){}
 
     @Override
-    public void sendEmail(String from,String to, String subject, String text) throws MailException {
+    public void sendEmail(Email emailData) throws MailException {
         log.info("Started sending email");
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
+        String emailTemplate = """
+                Name: %s
+                
+                Email: %s
+                
+                Phone: %s
+                
+                Source: %s
+                
+                Message: %s
+                """;
+        message.setFrom(emailData.from());
+        message.setTo(emailData.to());
+        message.setSubject(emailData.subject());
+
+        message.setText(String.format(emailTemplate,
+                emailData.name(),emailData.email(),
+                emailData.phone(), emailData.leadSource(),
+                emailData.message()));
+
         try{
             emailSender.send(message);
             log.info("Successfully send email!");

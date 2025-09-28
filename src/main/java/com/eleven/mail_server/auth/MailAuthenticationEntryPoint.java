@@ -20,15 +20,14 @@ public class MailAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
-
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         Map<String, Object> body = Map.of(
+                "status","error",
                "error", "Unauthorized",
                 "message", authException.getMessage(),
                 "path", request.getRequestURI()
         );
-
         response.getWriter().write(objectMapper.writeValueAsString(body));
     }
 }

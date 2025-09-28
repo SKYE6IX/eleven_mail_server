@@ -36,25 +36,20 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest){
         try{
             authenticationManager.authenticate(
-
                     new UsernamePasswordAuthenticationToken(
                             authRequest.getUsername(),
                             authRequest.getPassword()
                     )
             );
-
         } catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        String token = jwtUtil.generateToken(authRequest.getUsername());
-
-        return ResponseEntity.ok(new AuthResponse(token));
+        String refreshToken = jwtUtil.generateRefreshToken(authRequest.getUsername());
+        return ResponseEntity.ok(new AuthResponse(refreshToken));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthRequest authRequest){
-
 //        Check if User with the username already exist.
         UserEntity user = userRepository.findByUserName(authRequest.getUsername())
                 .orElse(null);

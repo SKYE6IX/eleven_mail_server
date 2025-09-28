@@ -31,12 +31,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
         String username = null;
-        String jwt = null;
+        String refreshToken = null;
+        String accessToken = null;
 
         if(authHeader != null && authHeader.startsWith("Bearer ")){
-            jwt = authHeader.substring(7);
+            refreshToken = authHeader.substring(7);
             try{
-                username = jwtUtil.extractUsername(jwt);
+                username = jwtUtil.extractUsername(refreshToken);
+                accessToken = jwtUtil.getValidAccessToken(username,refreshToken);
             } catch (ExpiredJwtException ex){
                 System.out.println("Error message: " + ex.getMessage());
             }
@@ -44,7 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailService.loadUserByUsername(username);
-            if(jwtUtil.isTokenValid(jwt, userDetails.getUsername())){
+            if(accessToken != null){
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -50,6 +50,7 @@ public class SecurityConfig {
 //      json web token,if it's false, a session exception above will return back to user.
 //      If the json web token is correct, if move forward with the "send-mail" route
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
         return httpSecurity.build();
     }
 
